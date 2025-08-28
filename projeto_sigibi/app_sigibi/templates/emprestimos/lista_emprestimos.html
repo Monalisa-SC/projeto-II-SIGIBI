@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Gerenciar Empréstimos{% endblock %}
+
+{% block content %}
+<h2>Gerenciar Empréstimos</h2>
+
+<form method="post" class="emprestimo-form" action="{% url 'registrar_emprestimo' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="aluno">Aluno:</label>
+        <select id="aluno" name="aluno" required>
+            {% if alunos %}
+                {% for aluno in alunos %}
+                    <option value="{{ aluno.id }}">{{ aluno.nome }}</option>
+                {% endfor %}
+            {% else %}
+                <option value="" disabled>Nenhum aluno cadastrado</option>
+            {% endif %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="livro">Livro:</label>
+        <select id="livro" name="livro" required>
+            {% if livros %}
+                {% for livro in livros %}
+                    <option value="{{ livro.id }}">{{ livro.titulo }}</option>
+                {% endfor %}
+            {% else %}
+                <option value="" disabled>Nenhum livro disponível</option>
+            {% endif %}
+        </select>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn">Registrar Empréstimo</button>
+    </div>
+</form>
+
+<h3>Empréstimos Ativos</h3>
+<div class="form-group">
+    <input type="text" id="buscarEmprestimo" onkeyup="filterTable('buscarEmprestimo', 'emprestimosTable')" placeholder="Buscar por aluno ou livro..." style="width: 80%; margin-bottom: 1rem;">
+    <button type="button" class="btn">Buscar</button>
+</div>
+{% if emprestimos %}
+<table id="emprestimosTable" class="emprestimos-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Aluno</th>
+            <th>Livro</th>
+            <th>Data Empréstimo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprestimo in emprestimos %}
+        <tr>
+            <td>{{ emprestimo.id }}</td>
+            <td>{{ emprestimo.aluno.nome }}</td>
+            <td>{{ emprestimo.livro.titulo }}</td>
+            <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+            <td>
+                {% if not emprestimo.data_devolucao %}
+                <form method="post" action="{% url 'devolver_emprestimo' emprestimo.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Devolver</button>
+                </form>
+                {% else %}
+                Devolvido em {{ emprestimo.data_devolucao|date:"d/m/Y" }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="no-data">Nenhum empréstimo ativo no momento.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrar Empréstimo{% endblock %}
+
+{% block content %}
+  <h2>Registrar Empréstimo</h2>
+
+  <form method="post" class="emprestimo-form">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="aluno">Aluno:</label>
+      <select id="aluno" name="aluno" required>
+        {% if alunos %}
+          {% for aluno in alunos %}
+            <option value="{{ aluno.id }}">{{ aluno.nome }}</option>
+          {% endfor %}
+        {% else %}
+          <option value="" disabled>Nenhum aluno cadastrado</option>
+        {% endif %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="livro">Livro:</label>
+      <select id="livro" name="livro" required>
+        {% if livros %}
+          {% for livro in livros %}
+            <option value="{{ livro.id }}">{{ livro.titulo }}</option>
+          {% endfor %}
+        {% else %}
+          <option value="" disabled>Nenhum livro disponível</option>
+        {% endif %}
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn">Registrar Empréstimo</button>
+    </div>
+  </form>
+{% endblock %}

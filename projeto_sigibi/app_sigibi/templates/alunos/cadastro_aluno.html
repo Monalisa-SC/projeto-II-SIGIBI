@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastrar Aluno{% endblock %}
+
+{% block content %}
+<h2>Cadastrar Novo Aluno</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            Por favor, corrija os erros abaixo:
+            <ul>
+                {% for field in form %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="{{ form.nome.id_for_label }}">Nome Completo:</label>
+        {{ form.nome }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.turma.id_for_label }}">Turma:</label>
+        {{ form.turma }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.matricula.id_for_label }}">Matrícula:</label>
+        {{ form.matricula }}
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Cadastrar Aluno</button>
+        <a href="{% url 'lista_alunos' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

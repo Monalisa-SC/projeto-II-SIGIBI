@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Autores do Projeto - SIGIBI{% endblock %}
+
+{% block content %}
+<section class="autores-section">
+    <h2>Equipe de Desenvolvimento</h2>
+
+    <div class="autores-grid">
+        <div class="autor-card">
+            <div class="autor-img">
+                <img src="https://via.placeholder.com/150" alt="Foto de Autor 1">
+            </div>
+            <h3>Autor 1</h3>
+            <p>Desenvolvedor Backend</p>
+            <p>Responsável pelo planejamento do projeto, especialista em Python e Django.</p>
+        </div>
+
+        <div class="autor-card">
+            <div class="autor-img">
+                <img src="https://via.placeholder.com/150" alt="Foto de Autor 2">
+            </div>
+            <h3>Autor 2</h3>
+            <p>Desenvolvedor Frontend</p>
+            <p>Especialista em HTML, CSS e JavaScript.</p>
+        </div>
+
+        <div class="autor-card">
+            <div class="autor-img">
+                <img src="https://via.placeholder.com/150" alt="Foto de Autor 3">
+            </div>
+            <h3>Autor 3</h3>
+            <p>Analista de Sistemas</p>
+            <p>Responsável banco de dados.</p>
+        </div>
+
+                <div class="autor-card">
+            <div class="autor-img">
+                <img src="https://via.placeholder.com/150" alt="Foto de Autor 4">
+            </div>
+            <h3>Autor 3</h3>
+            <p>Analista de Sistemas</p>
+            <p>Responsável pela documentação.</p>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

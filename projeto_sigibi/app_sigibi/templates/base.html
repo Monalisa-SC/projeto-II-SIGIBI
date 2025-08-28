@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SIGIBI - Sistema de Gerenciamento{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SIGIBI - Sistema Integrado de Gerenciamento Interno da Biblioteca</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Início</a></li>
+                <li><a href="{% url 'lista_alunos' %}">Cadastro de Alunos</a></li>
+                <li><a href="{% url 'lista_livros' %}">Cadastro de Livros</a></li>
+                <li><a href="{% url 'lista_emprestimos' %}">Empréstimos</a></li>
+                <li><a href="{% url 'lista_historico' %}">Histórico</a></li>
+                <li><a href="{% url 'autores' %}">Autores do Projeto</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>&copy; 2025 SIGIBI. Todos os direitos reservados.</p>
+        </footer>
+        <script src="{% static 'js/scripts.js' %}"></script>
+    </div>
+</body>
+</html>
+
+<script>
+function filterTable(inputId, tableId) {
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById(inputId);
+    filter = input.value.toLowerCase();
+    table = document.getElementById(tableId);
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+        tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td");
+        for (j = 0; j < td.length; j++) {
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    break;
+                }
+            }
+        }
+    }
+}
+</script>

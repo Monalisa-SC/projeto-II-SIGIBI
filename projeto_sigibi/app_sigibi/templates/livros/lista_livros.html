@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lista de Livros{% endblock %}
+
+{% block content %}
+    <h1>Lista de Livros</h1>
+
+    <a href="{% url 'cadastro_livro' %}" class="button">Cadastrar Novo Livro</a>
+    <div class="form-group">
+        <input type="text" id="buscarLivro" onkeyup="filterTable('buscarLivro', 'tabelaLivros')" placeholder="Buscar por título, autor..." style="width: 80%; margin: 1rem 0;">
+        <button type="button" class="btn">Buscar</button>
+    </div>
+
+    <table id="tabelaLivros">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Ano</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for livro in livros %}
+                <tr>
+                    <td>{{ livro.id }}</td>
+                    <td>{{ livro.titulo }}</td>
+                    <td>{{ livro.autor }}</td>
+                    <td>{{ livro.ano }}</td>
+                    <td>{{ livro.quantidade }}</td>
+                    <td>
+                        <a href="{% url 'editar_livro' livro.id %}" class="button edit-button">Editar</a>
+                        <form method="post" action="{% url 'excluir_livro' livro.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="button delete-button" onclick="return confirm('Tem certeza que deseja excluir este livro?')">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">Nenhum livro cadastrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

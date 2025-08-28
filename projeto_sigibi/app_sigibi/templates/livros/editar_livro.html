@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Livro{% endblock %}
+
+{% block content %}
+    <h1>Editar Livro</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="error-message">
+                Por favor, corrija os erros abaixo:
+                <ul>
+                    {% for field in form %}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="{{ form.titulo.id_for_label }}">Título:</label>
+            {{ form.titulo }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.autor.id_for_label }}">Autor:</label>
+            {{ form.autor }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.ano.id_for_label }}">Ano de Publicação:</label>
+            {{ form.ano }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.quantidade.id_for_label }}">Quantidade:</label>
+            {{ form.quantidade }}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="button">Salvar Alterações</button>
+            <a href="{% url 'lista_livros' %}" class="button secondary-button">Cancelar</a>
+        </div>
+    </form>
+{% endblock %}

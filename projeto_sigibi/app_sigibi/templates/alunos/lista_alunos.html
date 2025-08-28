@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Alunos Cadastrados{% endblock %}
+
+{% block content %}
+<h2>Alunos Cadastrados</h2>
+
+<p><a href="{% url 'cadastro_aluno' %}" class="btn btn-success">Cadastrar Novo Aluno</a></p>
+
+<div class="form-group">
+    <input type="text" id="buscarAluno" onkeyup="filterTable('buscarAluno', 'alunosTable')" placeholder="Buscar aluno..." style="width: 80%; margin-right: 1rem;">
+    <button type="button" class="btn">Buscar</button>
+</div>
+
+<table id="alunosTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Turma</th>
+            <th>Matrícula</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for aluno in alunos %}
+        <tr>
+            <td>{{ aluno.id }}</td>
+            <td>{{ aluno.nome }}</td>
+            <td>{{ aluno.turma }}</td>
+            <td>{{ aluno.matricula }}</td>
+            <td>
+                <a href="{% url 'editar_aluno' aluno.id %}" class="btn btn-primary btn-sm">Editar</a>
+                <a href="{% url 'excluir_aluno' aluno.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este aluno?')">Excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">Nenhum aluno cadastrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
